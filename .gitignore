@@ -8,8 +8,9 @@
 # ---------- 构建管线与验证产物（本地保留，不随页面发布）----------
 # build/ 内含下载转存的 .sc/.sctx 与渲染脚本，共约 9 MB
 build/
-_verify.html
-_shot.png
+# 本地临时/验证产物（_verify.html、_shot.png、截图与探针页等）
+_*.html
+_*.png
 
 # ---------- Python ----------
 __pycache__/

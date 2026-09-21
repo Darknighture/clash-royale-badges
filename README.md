@@ -7,14 +7,21 @@
 
 | 数量 | 说明 |
 | --- | --- |
-| **79** | 徽章条目（带独立徽章图的系列徽章，如经典挑战 / 终极挑战 / CRL 等） |
-| **387** | 等级图，同级可选、逐级变样式（图示最高等级） |
+| **200** | 徽章条目 |
+| **1597** | 等级图，同级可选、逐级变样式（图示最高等级） |
 | **6** | 徽章类型（普通 / 稀有 / 史诗 / 传说 / 冠军 / 归档） |
-| **123** | 卡牌精通徽章（Mastery），需「精通框 + 卡牌图标」合成，留待第二阶段 |
 
-> 其中 4 个徽章（`CrazyArenaCompletion`、`CrazyArenaRank`、`TripleDraftLeagueCompletion`、
+其中：
+
+- **78** 个带独立徽章图的系列徽章（经典挑战 / 终极挑战 / CRL 等），共 **377** 张等级图；
+- **122** 个**卡牌大师徽章**（Mastery），共 **1220** 张等级图（每卡 10 级）。
+  这批徽章游戏里**没有现成精灵**，由「通用精通框 + 卡牌图标」现场合成，见下文。
+
+> 另有 4 个徽章（`CrazyArenaCompletion`、`CrazyArenaRank`、`TripleDraftLeagueCompletion`、
 > `TripleDraftLeagueRank`）数据表声明了 10 级，但当前游戏素材只到第 1~2 级，
 > 因此仅收录素材已有的等级，并在卡面与灯箱标注「部分收录」。
+>
+> 1 个卡牌大师徽章（**亡灵巨人 / `MasteryMinionGiant`**）在图标目录里没有对应图标，未收录。
 
 交互功能：
 
@@ -23,6 +30,7 @@
 - **排序** —— 排序值（SortOrder）/ 名称 A→Z / 按类型分组 / 按等级数
 - **详情灯箱** —— 大图 + 等级缩略图条（点选切换）+ 等级一览与获得条件，`←` `→` 翻页、`↑` `↓` 换等级、`Esc` 关闭
 - **中 / EN 切换** —— 名称与说明取自游戏文案表（`texts.csv` 的 CN / EN 列）
+- **卡牌大师标记** —— 合成徽章在卡面与灯箱带「卡牌大师」标签，并显示所用角色图文件名
 
 ## 快速开始
 
@@ -34,11 +42,12 @@
 .
 ├── index.html              # 自包含单文件页面（数据内联）
 └── assets/
-    └── badges/             # 343 张 PNG（按导出名命名，170px 高）
+    ├── badges/             # 333 张 PNG（独立徽章图，170px 高）
+    └── mastery/            # 1220 张 PNG（卡牌大师合成图，170px 高）
 ```
 
-原始数据表 `badges.csv` 与构建脚本、转存的 `.sc/.sctx` 同 `build/` 目录一并不入库
-（见 `.gitignore`），重建时从游戏素材转储重新读取即可。
+原始数据表 `badges.csv` 与构建脚本、转存的 `.sc/.sctx` 均不入库（见 `.gitignore`），
+重建时从游戏素材转储与卡牌图标目录重新读取即可。
 
 ## 重建
 
@@ -46,25 +55,74 @@
 cd build
 python fetch_assets.py     # 从官方 CDN 取 sc/ui_badges.sc → ScDowngrade 转 SC1
 python build_assets.py     # 解析 badges.csv + texts.csv，渲染 PNG，产出 badges.json
-python build_page.py       # 注入 template.html，产出 ../index.html
-python verify_page.py      # 无头 Chrome 验证（卡片数 / 图加载 / 筛选 / 灯箱 / 中英切换）
+python build_mastery.py    # 合成 122 个卡牌大师徽章，产出 assets/mastery/*.png + mastery.json
+python build_page.py       # 合并两份数据，注入 template.html，产出 ../index.html
+python verify_page.py      # 无头 Chrome 验证（卡片数 / 图加载 / 筛选 / 灯箱 / 中英切换 / 合成徽章）
 ```
+
+`build_mastery.py` 支持 `--only key1,key2` 只渲染指定卡牌、`--force` 忽略已有图片全部重渲染。
+`probe_window.py` 用来量精通框的遮罩窗口（换精灵版本后重跑一次即可，见下文）。
+`check_border.py` 验证「自适应去边框」的效果（裁切比例分布 + 裁后外圈颜色标准差），
+`ring_profile.py <图名>` 单图诊断（打印距边界每一圈的颜色标准差，定位框体内缘），
+`contact_sheet.py` 出「源卡 + 裁切框 | 渲染结果」对照图便于肉眼复核。
 
 `build/` 内含转存的 `.sc/.sctx`（约 7 MB）与渲染脚本，**不随页面发布**。
 
 ## 数据说明
 
-- **徽章图**来自 `sc/ui_badges.sc`（SC2 原件从官方 CDN 取，`ScDowngrade` 转 SC1 后渲染）。
+### 独立徽章图
+
+- 来自 `sc/ui_badges.sc`（SC2 原件从官方 CDN 取，`ScDowngrade` 转 SC1 后渲染）。
   注意部分转储里的该文件是 0 字节占位，正文在 `.sctx` 中，故 `.sc` 必须走 CDN；
   外部纹理 `.sctx` 必须与 `.sc` **同一版本**，否则纹理图集不匹配会渲染出碎片错图。
-- **文案**来自 `csv_client/texts.csv` 的 `EN` 与 `CN` 列，TID 一一对应。
+- 文案来自 `csv_client/texts.csv` 的 `EN` 与 `CN` 列，TID 一一对应。
+- **模板行不是徽章**：`badges.csv` 里 `Name` 以 `Template` 开头的行（如 `TemplateMastery10`）
+  只是给 `LevelsTemplate` 引用的通用框，收进来会变成「通用框 + 占位灰板」的假徽章，已剔除。
 - **数据表比素材新**：`badges.csv` 里少数徽章声明了素材中不存在的等级导出
   （见上文 4 个「部分收录」徽章）。这类缺图不静默丢弃——`build_assets.py`
   只保留能渲染的等级并在数据里写入 `missTxt`，页面据此提示；只有整只都缺图才会剔除。
-- **未收录**：123 个卡牌精通徽章（`LevelsTemplate=TemplateMastery10`）没有独立徽章图，
-  游戏内由「通用精通框 + 卡牌图标（按 `CustomImageOffsetX/Y`、`CustomImageScalePercent` 摆放）」合成。
+
+### 卡牌大师徽章（合成）
+
+这批徽章（`LevelsTemplate=TemplateMastery10`）在精灵里只有 10 个**通用框**
+（`mastery_badge_lvl1..10`），运行时才把对应卡牌的图填进框里。重建做法：
+
+1. **定位填充槽**：`mastery_badge_lvlN` 的元素顺序是
+   `[底层框] → [Mask: Shape 0] → [Masked: badge_art(资源 699, 119×151)] → [Unmasked: 高光/数字]`。
+   所以要替换的就是资源 699，替换后遮罩照常生效。
+   ⚠️ 渲染时必须开 `apply_masks=True`，否则 `Shape 0` 会被当成实心 `#CCFF00` 色块画出来。
+2. **逐等级量出可视窗口**：`probe_window.py` 往资源 699 注入一张「坐标编码图」
+   （R 通道存 x、G 通道存 y、全不透明），渲染后反解像素颜色，得到窗口在槽位中的范围。
+   实测窗口始终**居中于框体**，但**随等级变大**：lvl1~4 约 93 宽、lvl5 约 114、
+   lvl6~10 撑满槽位约 117。**用同一个窗口贴图，高等级两侧就会露出框体底色（看起来像白底）**，
+   所以 `mastery_art.WIN_BY_LEVEL` 逐级配置，由导出名里的 `lvlN` 自动选取。
+3. **取景**：卡图用 **`D:\CR\Usage\2026\icon\`** 里的卡面图标（带稀有度边框），
+   先 `trim_alpha` 去掉透明边，**再按图自适应裁掉那圈稀有度边框**，最后按窗口做
+   **cover** 缩放（`scale = max(宽比, 高比)`），保证两轴都 ≥ 窗口、**永不漏底**。
+   > 素材库 `image/chr*/` 里的高清图是「角色 + 场景」的横构图大画布（角色常只占一角），
+   > 塞进盾形窗口既不居中也会被裁没 —— 已改为只作兜底（`prep="scene"`）。
+   >
+   > **为什么要自适应去边框**：图标外圈是**多层**的稀有度框/辉光
+   > （彩色外圈 → 深色内圈 → 渐变压边），厚度**逐图不同**：实测 9px ~ 39px
+   > （全出血画如 `bandit` 只有 9px 辉光；老式卡框 `knight`/`archers` 12~22px；
+   > 法术/建筑 `fireball`/`freeze` 那批 24~39px）。曾经用一个固定比例 `0.15`
+   > 一刀切 —— 结果是**全出血画被多裁 30px**（等于 1.4 倍放大，角色被切）。
+   > 现在 `mastery_art.detect_border()` 逐边量厚度：从最外圈往内逐行/列取
+   > **中央 70% 区域的颜色标准差 σ**，找 **σ 骤升**的那一行/列 —— 框体内部 σ 平缓
+   > （≤22），一进入角色画立刻跳到 50~130。取**四边最小值**作为统一厚度
+   > （框体是对称的，而角色画里的大片纯色会让某一边的检测值虚高）。
+   > 为什么不能只看「σ 小于某阈值」：`freeze.png` 的角色画是**平滑渐变**
+   > （冰霜特效，σ 只有 20 上下），任何固定阈值都会要么停在框体中间、要么吃进画面。
+4. **颜色空间**：注入画布必须是**预乘 float32、rgb 0–255、alpha 0–1**，
+   与渲染器量纲一致。rgb 用 0–1 会整块变黑，alpha 用 0–255 会变惨白。
+5. **素材是调色板 PNG（P 模式）**：必须先 `convert("RGBA")` 再 resize，
+   否则调色板索引被当像素插值，整张变黑。
+
+图标名与内部 Key 常对不上（`IceGolemite`→`ice-golem`、`Assassin`→`bandit`、
+`DarkMagic`→`void`、`MergeMaiden`→`spirit-empress`…），所以按
+**内部 Key → 英文卡名 → 中文卡名** 依次归一化匹配，再前缀/后缀容错。
 
 ## 免责声明
 
-本项目为**非官方粉丝作品**。所有徽章图像的版权归 **Supercell** 所有，
+本项目为**非官方粉丝作品**。所有徽章与卡牌图像的版权归 **Supercell** 所有，
 仅用于学习与展示，不作商业用途。本项目与 Supercell 无任何关联，亦未获其授权或认可。
