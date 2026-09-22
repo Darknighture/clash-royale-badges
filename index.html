@@ -126,6 +126,13 @@ dd{margin:0;color:var(--ink);word-break:break-all;font-family:ui-monospace,SFMon
 .lb-nav button:hover{background:#f5f3fb;border-color:#cfc8ec}
 footer{border-top:1px solid var(--line);color:var(--ink3);font-size:12.5px;padding:22px 0 40px}
 footer code{background:#f0eef9;padding:1.5px 5px;border-radius:5px;font-size:12px;color:var(--ink2)}
+.disclaim{margin-top:18px;background:#f2effd;border:1px solid #ddd7f5;border-radius:12px;
+  padding:14px 16px;font-size:12.5px;line-height:1.75;color:var(--ink2)}
+.disclaim h2{margin:0 0 8px;font-size:12.5px;font-weight:700;color:#4b2fbb;letter-spacing:.02em;
+  display:flex;align-items:center;gap:7px}
+.disclaim h2:before{content:"";width:3px;height:13px;border-radius:2px;background:#6b34c8;flex:none}
+.disclaim p{margin:0}
+.disclaim a{color:#6b34c8;text-decoration:underline;text-underline-offset:2px}
 .empty{padding:60px 0;text-align:center;color:var(--ink3)}
 .grp{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#fff}
 .grp .tgl{border:none;border-radius:0;font-size:13px;padding:9px 11px}
@@ -137,7 +144,7 @@ footer code{background:#f0eef9;padding:1.5px 5px;border-radius:5px;font-size:12p
 
 <script>
 /* ---- 中 / EN 语言切换（在页面主脚本之前加载）---- */
-window.I18N = {"title":{"zh":"皇室战争 徽章图鉴 · Clash Royale Badge Gallery","en":"Clash Royale Badge Gallery · All Badges"},"h1":{"zh":"皇室战争 <em>全部徽章</em> 图鉴","en":"Clash Royale <em>All Badges</em> Gallery"},"hint":{"zh":"↓ 向下滚动浏览 · 卡面为该徽章的最高等级 · 点击查看全部等级与获得条件","en":"↓ Scroll to browse · each card shows the badge's highest level · click for all levels and unlock conditions"},"search":{"zh":"搜索名称 / 数据名 / 导出名 / TID…","en":"Search name / data name / export / TID…"},"tyAll":{"zh":"全部类型","en":"All types"},"catAll":{"zh":"全部分类","en":"All badges"},"catInd":{"zh":"独立徽章","en":"Sprite badges"},"catMk":{"zh":"卡牌大师","en":"Mastery"},"sortSo":{"zh":"按排序值","en":"By sort order"},"sortName":{"zh":"名称 A → Z","en":"Name A → Z"},"sortTy":{"zh":"按类型分组","en":"Group by type"},"sortLv":{"zh":"按等级数","en":"By level count"},"tMulti":{"zh":"多等级","en":"Multi-level"},"tMultiTip":{"zh":"仅看可升级（等级数 ≥ 2）的徽章","en":"Only badges with 2+ levels"},"reset":{"zh":"重置","en":"Reset"},"langLabel":{"zh":"语言","en":"Language"},"tipNote":{"zh":"徽章收录截止到2026年9月。","en":"Badges collected up to September 2026."},"empty":{"zh":"没有符合条件的徽章，试试放宽筛选条件。","en":"No badges match — try loosening the filters."},"prev":{"zh":"上一个 (←)","en":"Previous (←)"},"next":{"zh":"下一个 (→)","en":"Next (→)"},"close":{"zh":"关闭 (Esc)","en":"Close (Esc)"},"stBadges":{"zh":"徽章总数","en":"Badges"},"stLevels":{"zh":"等级总数","en":"Total levels"},"stTypes":{"zh":"徽章类型","en":"Types"},"stMulti":{"zh":"多等级","en":"Multi-level"},"stDis":{"zh":"已停用","en":"Disabled"},"countBadges":{"zh":"显示 <b>{1}</b> / {2} 个徽章（共 {3} 个等级）","en":"Showing <b>{1}</b> / {2} badges ({3} levels)"},"dataName":{"zh":"数据名","en":"Data name"},"badgeType":{"zh":"徽章类型","en":"Type"},"sortOrder":{"zh":"排序值","en":"Sort order"},"spriteFile":{"zh":"精灵文件","en":"Sprite file"},"levelCount":{"zh":"等级数","en":"Levels"},"lvN":{"zh":"第 {1} 级","en":"Level {1}"},"lvTag":{"zh":"{1} 级","en":"Lv {1}"},"levelsTitle":{"zh":"等级一览","en":"All levels"},"currentLevel":{"zh":"当前等级","en":"Current level"},"progress":{"zh":"进度要求","en":"Progress needed"},"exportName":{"zh":"导出名","en":"Export name"},"disabled":{"zh":"已停用","en":"Disabled"},"hideNotEarned":{"zh":"未获得时隐藏","en":"Hidden if not earned"},"upgradable":{"zh":"可升级","en":"Upgradable"},"dropNote":{"zh":"另有 {1} 个徽章因素材缺失未能渲染，未列入本页。","en":"Another {1} badges could not be rendered (missing assets) and are not listed here."},"partial":{"zh":"部分收录","en":"Partial"},"partialNote":{"zh":"本版游戏素材缺少第 {1} 级导出，该等级未收录。","en":"Level {1} is missing from this sprite version and is not included."},"partialFoot":{"zh":"另有 {1} 个徽章，当前游戏素材只到较低等级，故仅收录素材已有的等级（已标注「部分收录」）。","en":"For {1} badges the current sprite version only reaches a lower level, so only the available levels are listed (marked “Partial”)."},"masteryTag":{"zh":"卡牌大师","en":"Mastery"},"mkFoot":{"zh":"其中 {1} 个为卡牌大师徽章，由「通用精通框 + 卡牌角色图」现场合成（非游戏内现成精灵）。","en":"{1} of them are Card Mastery badges, composited from the generic mastery frame + the card's character art (not shipped as ready-made sprites)."},"mkMissing":{"zh":"另有 {1} 个卡牌大师徽章因缺少角色图未收录：{2}。","en":"{1} Card Mastery badges are not listed (no character art available): {2}."},"artFile":{"zh":"卡牌图","en":"Card art"},"noDesc":{"zh":"暂无说明","en":"No description"},"none":{"zh":"—","en":"—"}};
+window.I18N = {"title":{"zh":"皇室战争 徽章图鉴 · Clash Royale Badge Gallery","en":"Clash Royale Badge Gallery · All Badges"},"h1":{"zh":"皇室战争 <em>全部徽章</em> 图鉴","en":"Clash Royale <em>All Badges</em> Gallery"},"hint":{"zh":"↓ 向下滚动浏览 · 卡面为该徽章的最高等级 · 点击查看全部等级与获得条件","en":"↓ Scroll to browse · each card shows the badge's highest level · click for all levels and unlock conditions"},"search":{"zh":"搜索名称 / 数据名 / 导出名 / TID…","en":"Search name / data name / export / TID…"},"tyAll":{"zh":"全部类型","en":"All types"},"catInd":{"zh":"独立徽章","en":"Sprite badges"},"catMk":{"zh":"卡牌大师","en":"Mastery"},"sortSo":{"zh":"按排序值","en":"By sort order"},"sortName":{"zh":"名称 A → Z","en":"Name A → Z"},"sortTy":{"zh":"按类型分组","en":"Group by type"},"sortLv":{"zh":"按等级数","en":"By level count"},"tMulti":{"zh":"多等级","en":"Multi-level"},"tMultiTip":{"zh":"仅看可升级（等级数 ≥ 2）的徽章","en":"Only badges with 2+ levels"},"reset":{"zh":"重置","en":"Reset"},"langLabel":{"zh":"语言","en":"Language"},"tipNote":{"zh":"徽章收录截止到2026年9月。","en":"Badges collected up to September 2026."},"empty":{"zh":"没有符合条件的徽章，试试放宽筛选条件。","en":"No badges match — try loosening the filters."},"prev":{"zh":"上一个 (←)","en":"Previous (←)"},"next":{"zh":"下一个 (→)","en":"Next (→)"},"close":{"zh":"关闭 (Esc)","en":"Close (Esc)"},"stBadges":{"zh":"徽章总数","en":"Badges"},"stLevels":{"zh":"等级总数","en":"Total levels"},"stTypes":{"zh":"徽章类型","en":"Types"},"stMulti":{"zh":"多等级","en":"Multi-level"},"stDis":{"zh":"已停用","en":"Disabled"},"countBadges":{"zh":"显示 <b>{1}</b> / {2} 个徽章（共 {3} 个等级）","en":"Showing <b>{1}</b> / {2} badges ({3} levels)"},"dataName":{"zh":"数据名","en":"Data name"},"badgeType":{"zh":"徽章类型","en":"Type"},"sortOrder":{"zh":"排序值","en":"Sort order"},"spriteFile":{"zh":"精灵文件","en":"Sprite file"},"levelCount":{"zh":"等级数","en":"Levels"},"lvN":{"zh":"第 {1} 级","en":"Level {1}"},"lvTag":{"zh":"{1} 级","en":"Lv {1}"},"levelsTitle":{"zh":"等级一览","en":"All levels"},"currentLevel":{"zh":"当前等级","en":"Current level"},"progress":{"zh":"进度要求","en":"Progress needed"},"exportName":{"zh":"导出名","en":"Export name"},"disabled":{"zh":"已停用","en":"Disabled"},"hideNotEarned":{"zh":"未获得时隐藏","en":"Hidden if not earned"},"upgradable":{"zh":"可升级","en":"Upgradable"},"dropNote":{"zh":"另有 {1} 个徽章因素材缺失未能渲染，未列入本页。","en":"Another {1} badges could not be rendered (missing assets) and are not listed here."},"partial":{"zh":"部分收录","en":"Partial"},"partialNote":{"zh":"本版游戏素材缺少第 {1} 级导出，该等级未收录。","en":"Level {1} is missing from this sprite version and is not included."},"masteryTag":{"zh":"卡牌大师","en":"Mastery"},"artFile":{"zh":"卡牌图","en":"Card art"},"noDesc":{"zh":"暂无说明","en":"No description"},"none":{"zh":"—","en":"—"},"disclaimer":{"zh":"本内容为<b>非官方粉丝作品</b>，与 Supercell 无任何关联，亦未获其授权或认可。所有图像、动画、音频的版权归 <b>Supercell</b> 所有，仅用于学习与展示，不作商业用途。详见 <a href='https://www.supercell.com/fan-content-policy' target='_blank' rel='noopener noreferrer'>Supercell 粉丝内容政策</a>。","en":"This content is an <b>unofficial fan project</b> — not affiliated with, authorized, or endorsed by Supercell. All images, animations and sounds are copyright <b>Supercell</b>; used for study and display only, with no commercial use. See <a href='https://www.supercell.com/fan-content-policy' target='_blank' rel='noopener noreferrer'>Supercell's Fan Content Policy</a>."},"discTitle":{"zh":"免责声明","en":"Disclaimer"}};
 window.LANG = (function(){ try{ return localStorage.getItem('cr-lang')==='en'?'en':'zh'; }catch(e){ return 'zh'; } })();
 window.T = function(k){
   var e = window.I18N[k]; if(!e) return '';
@@ -209,7 +216,7 @@ document.addEventListener('DOMContentLoaded', function(){
       <input id="q" type="search" data-i18n-ph="search" placeholder="搜索名称 / 数据名 / 导出名 / TID…" autocomplete="off">
     </label>
     <select id="ty"><option value="" data-i18n="tyAll">全部类型</option></select>
-    <select id="cat"></select>
+    <div class="grp" id="cat-grp" role="group"></div>
     <select id="sort">
       <option value="so" data-i18n="sortSo">按排序值</option>
       <option value="name" data-i18n="sortName">名称 A → Z</option>
@@ -232,7 +239,11 @@ document.addEventListener('DOMContentLoaded', function(){
 </main>
 
 <footer class="wrap">
-  <div><span id="f-drop"></span></div>
+  <span id="f-drop"></span>
+  <div class="disclaim">
+    <h2 data-i18n="discTitle">免责声明</h2>
+    <p data-i18n-html="disclaimer"></p>
+  </div>
 </footer>
 
 <div class="lb" id="lb">
@@ -279,16 +290,12 @@ function buildStats(){
 }
 function buildFoot(){
   const drop = META.droppedCount | 0;
-  const part = META.partialCount | 0;
-  const mk = META.masteryCount | 0;
-  const mkMiss = META.masteryMissingCount | 0;
   const el = document.getElementById('f-drop');
   if(!el) return;
+  // 「部分收录 / 卡牌大师合成 / 缺图未收录」三条说明已按用户要求移除；
+  // 只在整只徽章渲染失败（droppedCount > 0）时留一句提示。
   const bits = [];
   if(drop) bits.push(T('dropNote', drop));
-  if(part) bits.push(T('partialFoot', part));
-  if(mk) bits.push(T('mkFoot', mk));
-  if(mkMiss) bits.push(T('mkMissing', mkMiss, (META.masteryMissing || []).join('、')));
   el.textContent = bits.join(' ');
 }
 window.__foot = buildFoot;
@@ -307,23 +314,28 @@ function buildTyOptions(){
 }
 
 /* 分类筛选：独立徽章（游戏精灵直出，assets/badges） vs 卡牌大师（合成，assets/mastery）。
-   数量随语言无关，文案跟随语言重建。 */
+   只放两个按钮，都不亮 = 全部（再点一次已亮的那颗即可取消）；用户不要「全部分类」按钮。
+   ⚠️ 当前选中值放在 catCur，不能放进 S：applyI18n() 会在主脚本跑之前就回调
+   buildCatOptions()，那时 S 还在 TDZ，一读就 ReferenceError。 */
 const catCount={ind:B.filter(x=>!x.mk).length, mk:B.filter(x=>x.mk).length};
-const catSel=document.getElementById('cat');
+const catGrp=document.getElementById('cat-grp');
+let catCur="";
 function buildCatOptions(){
-  const cur=catSel.value;
-  catSel.innerHTML=
-    `<option value="">${T("catAll")} (${B.length})</option>`+
-    `<option value="ind">${T("catInd")} (${catCount.ind})</option>`+
-    `<option value="mk">${T("catMk")} (${catCount.mk})</option>`;
-  catSel.value=cur;
+  catGrp.innerHTML=[["ind",T("catInd"),catCount.ind],["mk",T("catMk"),catCount.mk]]
+    .map(([v,label,n])=>`<button class="tgl${catCur===v?" on":""}" data-cat="${v}">${label} (${n})</button>`).join("");
 }
+catGrp.onclick=ev=>{
+  const b=ev.target.closest('button[data-cat]'); if(!b) return;
+  const v=b.getAttribute('data-cat');
+  catCur=(catCur===v)?"":v;   // 再点一次取消 → 回到全部
+  buildCatOptions(); render();
+};
 
-const S = {q:"", ty:"", cat:"", sort:"so", multi:false};
+const S = {q:"", ty:"", sort:"so", multi:false};
 function match(x){
   if(S.ty && x.ty!==S.ty) return false;
-  if(S.cat==="ind" && x.mk) return false;
-  if(S.cat==="mk" && !x.mk) return false;
+  if(catCur==="ind" && x.mk) return false;
+  if(catCur==="mk" && !x.mk) return false;
   if(S.multi && x.lv.length<2) return false;
   if(S.q){
     const hay=(x.t+" "+x.z+" "+x.n+" "+x.ty+" "+x.lv.map(l=>l.x+" "+l.t+" "+l.z).join(" ")+" "+x.lv.map(l=>l.p).join(" ")).toLowerCase();
@@ -449,16 +461,16 @@ document.getElementById('q').addEventListener('input',ev=>{
   timer=setTimeout(()=>{S.q=v.trim(); render();},120);
 });
 document.getElementById('ty').onchange=ev=>{S.ty=ev.target.value; render();};
-document.getElementById('cat').onchange=ev=>{S.cat=ev.target.value; render();};
 document.getElementById('sort').onchange=ev=>{S.sort=ev.target.value; render();};
 (function(){
   const el=document.getElementById('t-multi');
   el.onclick=()=>{S.multi=!S.multi; el.classList.toggle('on',S.multi); render();};
 })();
 document.getElementById('reset').onclick=()=>{
-  S.q="";S.ty="";S.cat="";S.sort="so";S.multi=false;
-  document.getElementById('q').value="";document.getElementById('ty').value="";document.getElementById('cat').value="";document.getElementById('sort').value="so";
+  S.q="";S.ty="";S.sort="so";S.multi=false;catCur="";
+  document.getElementById('q').value="";document.getElementById('ty').value="";document.getElementById('sort').value="so";
   document.querySelectorAll('.tgl.on:not(#l-zh):not(#l-en)').forEach(el=>el.classList.remove('on'));
+  buildCatOptions();
   render();
 };
 buildStats();
